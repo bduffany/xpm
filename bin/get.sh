@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-git >/dev/null --version || {
+git --version >/dev/null || {
   echo "error: missing git command; install git and try again"
   exit 1
 }
