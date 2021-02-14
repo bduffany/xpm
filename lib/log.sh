@@ -30,7 +30,7 @@ function xpm::log::color() {
 }
 
 function xpm::log::alias() {
-  for name in fatal comment success error; do
+  for name in fatal comment success color; do
     xpm::functions::redeclare "xpm::log::$name" "$name"
   done
 }
