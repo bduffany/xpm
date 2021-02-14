@@ -9,10 +9,11 @@ USAGE:
     xpm command [command options] [arguments...]
 
 COMMANDS:
-  install  install a package on the current system
-  source   output shell code for importing xpm sources
-  upgrade  upgrade xpm
-  help     get help for a command
+  install, i  install a package on the current system
+  source      output shell code for importing xpm sources
+  upgrade     upgrade xpm
+  help, h     show help for xpm
+  version, v  print version and exit
 "
 
 if [[ -z "$@" ]]; then
@@ -29,6 +30,9 @@ cmd="$1"
 if ! [[ -e "$_XPM_ROOT/lib/cmd/" ]]; then
   echo "xpm: could locate lib/cmd/ subdirectory of _XPM_ROOT (set to $_XPM_ROOT)"
   exit 1
+fi
+if [[ "$cmd" == "v" ]]; then
+  cmd="version"
 fi
 if ! [[ -e "$_XPM_ROOT/lib/cmd/$cmd.sh" ]]; then
   echo "xpm: invalid command: $cmd" >&2

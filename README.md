@@ -29,7 +29,14 @@ It currently supports **Linux** and **MacOS**.
 
 ## How do I use it?
 
-1. Include the XPM preamble in your Bash script
+1. Include the XPM preamble in your Bash script:
+
+```bash
+#!/usr/bin/env bash
+set -e
+&>/dev/null xpm v  || (curl -SsLo- 'https://xpm.sh/setup.sh' | bash))
+```
+
 2. Declare your dependencies with `xpm install`
 3. Start using those dependencies!
 

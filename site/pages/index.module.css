@@ -1,0 +1,87 @@
+.title {
+  font-size: 24px;
+}
+
+.card {
+  padding: 24px 0;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  width: 560px;
+  margin: 0 auto;
+  margin-top: 64px;
+  position: relative;
+  backdrop-filter: blur(8px);
+  z-index: 1;
+}
+
+.card > :not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.cardRow {
+  padding: 0 24px;
+}
+
+.bigXContainer {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0.5;
+}
+
+.term {
+  background: #263238;
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 16px;
+  padding: 16px 24px;
+  color: white;
+}
+
+.theVision {
+  text-transform: uppercase;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.term pre {
+  line-height: 1.25em;
+}
+
+.ps1,
+.comment {
+  user-select: none;
+}
+
+.comment {
+  color: #78909c;
+}
+
+.ps1 {
+  color: #66bb6a;
+}
+
+.bigX > div {
+  height: 0;
+  position: fixed;
+  top: 50%;
+  left: calc(-100vw - 100vh);
+  right: calc(-100vw - 100vh);
+  --thickness: calc(min(50vw, 50vh));
+  background: #f3f3f3;
+  border-bottom: calc(var(--thickness) / 2) solid #f3f3f3;
+  border-top: calc(var(--thickness) / 2) solid #f3f3f3;
+  z-index: 0;
+}
+
+.bigX1 {
+  transform: rotate(45deg);
+}
+
+.bigX2 {
+  transform: rotate(-45deg);
+}

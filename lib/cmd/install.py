@@ -38,7 +38,7 @@ def packages_to_install(packages: Set[str] = None) -> Set[str]:
 
 
 def is_satisfied(dep: str):
-    # TODO: More robust logpassic. Currently we just check if the package name exists as a command.
+    # TODO: Handle cases where commands don't necessarily match the package name
     return sh(f"which {dep}").returncode == 0
 
 
