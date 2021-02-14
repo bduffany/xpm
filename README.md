@@ -29,32 +29,36 @@ It currently supports **Linux** and **MacOS**.
 
 ## How do I use it?
 
-1. Include the XPM preamble in your Bash script:
+1. Install xpm if it's not installed already:
 
 ```bash
-#!/usr/bin/env bash
-set -e
-&>/dev/null xpm v  || (curl -SsLo- 'https://xpm.sh/setup.sh' | bash))
+&>/dev/null xpm v || (curl -SsLo- 'xpm.sh/get' | bash)
 ```
 
-2. Declare your dependencies with `xpm install`
+2. Install whatever you need:
+
+```bash
+
+```
+
 3. Start using those dependencies!
 
-## Docker-friendly!
+## Is it Docker-friendly?
 
-You can also use XPM to simplify your Dockerfiles.
+Yes! You can use XPM to simplify your Dockerfiles.
 
-Instead of arcane manual install recipes like this:
+Instead of arcane install recipes like this:
 
-```
+```dockerfile
 RUN cd $(mktemp -d) && wget https://download.bar.io/release/latest/bar.tar.gz && \
     tar xvf bar.tar.gz && cp bar /usr/local/bin/bar` && rm -rf $(pwd) && cd -
 ```
 
-Use XPM to handle these arcane deps for you!
+Use xpm to install these deps for you!
 
-```
-RUN ./xpm_setup.sh && xpm install -y bar
+```dockerfile
+RUN &>/dev/null xpm v || (curl -SsLo- 'xpm.sh/get' | bash)
+RUN xpm install -y bar
 ```
 
 ## Project status

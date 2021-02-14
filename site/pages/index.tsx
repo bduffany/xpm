@@ -18,16 +18,16 @@ export default function Home() {
           <pre>
             <span className={css.comment}># get xpm</span>
             <br />
-            <span className={css.ps1}>$ </span>curl -sSLo-
-            https://xpm.sh/setup.sh | bash
+            <span className={css.ps1}>$ </span>curl -sSLo- https://xpm.sh/get |
+            bash
             <br />
             <span className={css.comment}>
               # Install your favorite software.
-              <br /># (You won't find these with apt-get!)
+              <br /># (You won't find these on apt-get!)
               <br />
             </span>
-            <span className={css.ps1}>$ </span>xpm install google-chrome ngrok
-            fzf
+            <span className={css.ps1}>$ </span>xpm install google-chrome fzf
+            ngrok
           </pre>
         </div>
         <div className={css.cardRow}>

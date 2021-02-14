@@ -15,8 +15,14 @@ if ! which python3 >/dev/null; then
 fi
 
 function get_install_dir() {
-  # TODO: What about MacOS?
-  echo "/opt/xpm"
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo "/opt/xpm"
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "/Applications/xpm"
+  else
+    echo "error: unsupported OS: $OSTYPE"
+    exit 1
+  fi
 }
 : ${INSTALL_DIR:=$(get_install_dir)}
 if [[ -e "$INSTALL_DIR" ]]; then
