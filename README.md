@@ -38,14 +38,23 @@ It currently supports **Linux** and **MacOS**.
 2. Install whatever you need:
 
 ```bash
-
+xpm install fzf ngrok jq google-chrome # ...
 ```
 
 3. Start using those dependencies!
 
-## Is it Docker-friendly?
+## FAQ
 
-Yes! You can use XPM to simplify your Dockerfiles.
+### Which packages are supported?
+
+See the package listing in [bin/lib/packages](bin/lib/packages).
+
+If a package is not found there, `xpm` falls back to the installed
+package manager (`apt-get`, `brew`, etc.)
+
+### Can I use it in a Dockerfile?
+
+Yes! You can use xpm to simplify your Dockerfiles.
 
 Instead of arcane install recipes like this:
 
@@ -61,6 +70,8 @@ RUN &>/dev/null xpm v || (curl -SsLo- 'xpm.sh/get' | bash)
 RUN xpm install -y bar
 ```
 
+_Disclaimer: This project is still in alpha, so don't use it in production Docker builds yet._
+
 ## Project status
 
-This project is currently in **alpha**. Please feel free to file issues with any feedback or feature requests you might have!
+This project is currently in **alpha**. Please feel free to file issues with any feedback or feature requests you might have! If you want to add install scripts, get in touch!
