@@ -1,14 +1,21 @@
 #!/usr/bin/env bash
 set -e
-source "$(dirname $(realpath "$0"))/../lib/bootstrap.sh"
+
+export _XPM_ROOT="$(realpath $(dirname $(realpath "$0"))/..)"
+if [[ -e "$_XPM_ROOT/.git" ]]; then
+  echo "setup.sh: not intended to be run inside the git repo; exiting"
+  exit 1
+fi
+
+source "$_XPM_ROOT/lib/bootstrap.sh"
 
 _xpm_import "log"
 _xpm_import "platform/package_manager"
 
-: ${REPO_URL:="https://github.com/bduffany/xpm"}
 : ${LOCAL_BINARIES_PATH:="/usr/local/bin/"}
 
 printf "install xpm? [Y/n]: " && read && [[ "$REPLY" =~ ^[Yy]?$ ]]
+
 if ! which python3 >/dev/null; then
   printf "install python3 (required by xpm)? [Y/n]" && read && [[ "$REPLY" =~ ^[Yy]?$ ]]
   xpm::platform::package_manager::install python3
@@ -30,18 +37,9 @@ if [[ -e "$INSTALL_DIR" ]]; then
   exit 1
 fi
 
-cd $(mktemp -d)
-function cleanup() {
-  rm -rf "$PWD"
-}
-trap cleanup EXIT
-
+# Relocate the workspace to the install dir
 sudo mkdir -p "$(dirname "$INSTALL_DIR")"
-if ! [[ -z "$DEV_REPO_PATH" ]]; then
-  sudo cp -R "$DEV_REPO_PATH" "$INSTALL_DIR"
-else
-  git clone "$REPO_URL" xpm --depth 1
-  sudo mv xpm "$INSTALL_DIR"
-fi
+cd / && sudo mv "$_XPM_ROOT" "$INSTALL_DIR" && cd "$INSTALL_DIR"
+
 sudo ln -s "$INSTALL_DIR/bin/xpm.sh" "$LOCAL_BINARIES_PATH/xpm"
 sudo chmod +x "$LOCAL_BINARIES_PATH/xpm"
