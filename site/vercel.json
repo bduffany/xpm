@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/get",
+      "destination": "https://raw.githubusercontent.com/bduffany/xpm/main/bin/get.sh",
+      "permanent": false
+    }
+  ]
+}
