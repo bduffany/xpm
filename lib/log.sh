@@ -1,4 +1,5 @@
 _xpm_import "ansi"
+_xpm_import "functions"
 
 # Set COLOR env var to false to disable colors entirely.
 : ${COLOR:=true}
@@ -29,8 +30,7 @@ function xpm::log::color() {
 }
 
 function xpm::log::alias() {
-  alias fatal="xpm::log::fatal"
-  alias comment="xpm::log::comment"
-  alias success="xpm::log::success"
-  alias color="xpm::log::color"
+  for name in fatal comment success error; do
+    xpm::functions::redeclare "xpm::log::$name" "$name"
+  done
 }
