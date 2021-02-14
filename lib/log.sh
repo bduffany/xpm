@@ -1,22 +1,22 @@
-__import "lib/ansi.sh"
+_xpm_import "ansi"
 
 # Set COLOR env var to false to disable colors entirely.
 : ${COLOR:=true}
 
-function log::fatal() {
+function xpm::log::fatal() {
   color red "$@\n"
   exit 1
 }
 
-function log::success() {
+function xpm::log::success() {
   color green "$@\n"
 }
 
-function log::comment() {
+function xpm::log::comment() {
   color dim "$@\n"
 }
 
-function log::color() {
+function xpm::log::color() {
   if [[ "$COLOR" == "false" ]] || ! [ -t 1 ]; then
     shift
     echo "$@"

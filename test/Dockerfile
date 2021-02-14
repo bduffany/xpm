@@ -1,9 +1,9 @@
 FROM ubuntu:20.04
 
-RUN sudo apt update && sudo apt install -y git
+RUN apt update && apt install -y git sudo python3 curl unzip wget
 
 COPY . /src/xpm
 WORKDIR /src/xpm
-RUN REPO_URL=/src/xpm bin/setup.sh
+RUN yes | DEV_REPO_PATH=/src/xpm bin/setup.sh
 
 CMD ["bash"]
