@@ -23,5 +23,6 @@ function xpm::cmd::source::main() {
       ;;
     esac
   done
-  echo "source \"$_XPM_ROOT/lib/bootstrap.sh\" && source \"$_XPM_ROOT/$1\""
+  : ${_XPM_ROOT:="$(realpath $(dirname $(realpath "$0"))/..)"}
+  echo "export _XPM_ROOT=\"$_XPM_ROOT\" && source \"$_XPM_ROOT/lib/bootstrap.sh\" && source \"$_XPM_ROOT/$1\""
 }

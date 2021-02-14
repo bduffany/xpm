@@ -4,16 +4,16 @@ _xpm_import "ansi"
 : ${COLOR:=true}
 
 function xpm::log::fatal() {
-  color red "$@\n"
+  xpm::log::color red "$@\n"
   exit 1
 }
 
 function xpm::log::success() {
-  color green "$@\n"
+  xpm::log::color green "$@\n"
 }
 
 function xpm::log::comment() {
-  color dim "$@\n"
+  xpm::log::color dim "$@\n"
 }
 
 function xpm::log::color() {
@@ -25,5 +25,12 @@ function xpm::log::color() {
   local c_start=$(eval "echo \$__xpm_ansi_c_$1")
   shift
   local text="$@"
-  printf "${c_start}${text}${c_end}"
+  printf "${c_start}${text}${__xpm_ansi_c_end}"
+}
+
+function xpm::log::alias() {
+  alias fatal="xpm::log::fatal"
+  alias comment="xpm::log::comment"
+  alias success="xpm::log::success"
+  alias color="xpm::log::color"
 }

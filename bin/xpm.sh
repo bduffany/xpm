@@ -28,14 +28,14 @@ fi
 
 cmd="$1"
 if ! [[ -e "$_XPM_ROOT/lib/cmd/" ]]; then
-  echo "xpm: could locate lib/cmd/ subdirectory of _XPM_ROOT (set to $_XPM_ROOT)"
+  echo "xpm: error: could not locate lib/cmd/ subdirectory of _XPM_ROOT (set to $_XPM_ROOT)"
   exit 1
 fi
 if [[ "$cmd" == "v" ]]; then
   cmd="version"
 fi
 if ! [[ -e "$_XPM_ROOT/lib/cmd/$cmd.sh" ]]; then
-  echo "xpm: invalid command: $cmd" >&2
+  echo "xpm: error: invalid command: $cmd" >&2
   echo "$USAGE" >&2
   exit 1
 fi

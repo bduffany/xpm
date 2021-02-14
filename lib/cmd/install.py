@@ -82,6 +82,8 @@ if __name__ == "__main__":
 
     initial_deps = set(args.packages)
     unsatisfied_deps = packages_to_install(initial_deps)
+    if not len(unsatisfied_deps):
+        sys.exit(0)
     print("xpm: will install the following packages:")
     print("  " + ", ".join(unsatisfied_deps))
     if not args.yes:
