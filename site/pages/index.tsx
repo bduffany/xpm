@@ -16,10 +16,11 @@ export default function Home() {
         </div>
         <div className={css.term}>
           <pre>
-            <span className={css.comment}># get xpm</span>
-            <br />
-            <span className={css.ps1}>$ </span>curl -sSLo- https://xpm.sh/get |
-            bash
+            <span className={css.comment}>
+              # get xpm
+              <br />
+            </span>
+            <span className={css.ps1}>$ </span>curl -sSLo- xpm.sh/get | bash
             <br />
             <span className={css.comment}>
               # Install your favorite software.
