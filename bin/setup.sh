@@ -12,7 +12,7 @@ source "$_XPM_ROOT/lib/bootstrap.sh"
 _xpm_import "log"
 _xpm_import "platform/package_manager"
 
-: ${LOCAL_BINARIES_PATH:="/usr/local/bin/"}
+: ${LOCAL_BINARIES_DIR:="/usr/local/bin"}
 
 printf "install xpm? [Y/n]: " && read && [[ "$REPLY" =~ ^[Yy]?$ ]]
 
@@ -41,5 +41,5 @@ fi
 sudo mkdir -p "$(dirname "$INSTALL_DIR")"
 cd / && sudo mv "$_XPM_ROOT" "$INSTALL_DIR" && cd "$INSTALL_DIR"
 
-sudo ln -s "$INSTALL_DIR/bin/xpm.sh" "$LOCAL_BINARIES_PATH/xpm"
-sudo chmod +x "$LOCAL_BINARIES_PATH/xpm"
+sudo ln -s "$INSTALL_DIR/bin/xpm.sh" "$LOCAL_BINARIES_DIR/xpm"
+sudo chmod +x "$LOCAL_BINARIES_DIR/xpm"
