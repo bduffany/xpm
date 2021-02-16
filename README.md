@@ -18,12 +18,18 @@ Does this conversation sound familiar?
 
 ## XPM to the rescue
 
-XPM aims to solve the following problems:
+XPM aims to be a package manager that "just works."
 
-- Auto-install dependencies in your scripts, regardless of OS
+- You can include it in your bash scripts with **one line of code,**
+  then use it to install packages that are required by your scripts,
+  _regardless of the OS that the script is being run on_.
 
-- Installing the correct versions of dependencies, which are often out-of-date or
-  poorly configured by default, such as `docker` and `npm`.
+- It works around common problems with dependencies, such as outdated
+  versions being registered with the OS' package manager (looking at you,
+  `docker` and `node`).
+
+- It allows installing packages on the command line that would otherwise require
+  manual download and installation, like `ngrok`, `google-chrome`, and `telegram`.
 
 It currently supports **Linux** and **MacOS**.
 
@@ -32,7 +38,7 @@ It currently supports **Linux** and **MacOS**.
 1. Install xpm if it's not installed already:
 
 ```bash
-&>/dev/null xpm v || (curl -SsLo- 'xpm.sh/get' | bash)
+xpm v &>/dev/null || (curl -SsLo- 'xpm.sh/get' | bash)
 ```
 
 2. Install whatever you need:
@@ -45,6 +51,12 @@ xpm install fzf ngrok jq google-chrome # ...
 
 ## FAQ
 
+### What's the status of this project?
+
+It's currently in **alpha.** Things may break at any time. Some of the documentation
+may refer to behavior or features that are unstable or aren't implemented yet.
+Use at your own risk!
+
 ### Which packages are supported?
 
 See the package listing in [lib/packages](lib/packages).
@@ -54,24 +66,37 @@ package manager (`apt-get`, `brew`, etc.)
 
 ### Can I use it in a Dockerfile?
 
-Yes! You can use xpm to simplify your Dockerfiles.
-
-Instead of arcane install recipes like this:
+Yes! You can use xpm to simplify your Dockerfiles. Instead of arcane install
+recipes like this:
 
 ```dockerfile
 RUN cd $(mktemp -d) && wget https://download.bar.io/release/latest/bar.tar.gz && \
     tar xvf bar.tar.gz && cp bar /usr/local/bin/bar` && rm -rf $(pwd) && cd -
 ```
 
-Use xpm to install these deps for you!
+You can use xpm to install these deps for you!
 
 ```dockerfile
-RUN &>/dev/null xpm v || (curl -SsLo- 'xpm.sh/get' | bash)
+# Install basic deps needed for xpm
+RUN apt-get update -y && apt install sudo curl get wget unzip
+# Install XPM itself. Pipe "yes" into it to avoid confirmation prompts.
+# (Also, see security notes below)
+RUN xpm v &>/dev/null || yes | (curl -SsLo- 'xpm.sh/get' | bash)
+# Install with -y so confirmation isn't needed.
 RUN xpm install -y bar
 ```
 
-_Disclaimer: This project is still in alpha, so don't use it in production Docker builds yet._
+### Is it secure? What are the potential attack surfaces?
 
-## Project status
+- One attack surface is the `xpm.sh/get` endpoint. If something happens to me and I forget to
+  renew that domain, someone could snag that domain and point it at a malicious bash script.
+  To defend against this kind of attack, run a sha256 checksum on the downloaded script before
+  piping it into bash.
 
-This project is currently in **alpha**. Please feel free to file issues with any feedback or feature requests you might have! If you want to add install scripts, get in touch!
+- If a malicious actor gains control of my GitHub account, they could replace the setup script
+  with something malicious. If you believe that might happen, you could clone this repo and host
+  your own version of XPM.
+
+- Other attack surfaces are not really under the control of xpm itself.
+
+- Please file an issue if you find a security vulnerability!
