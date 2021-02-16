@@ -20,7 +20,7 @@ export default function Home() {
               # get xpm
               <br />
             </span>
-            <span className={css.ps1}>$ </span>curl -sSLo- xpm.sh/get | bash
+            <span className={css.ps1}>$ </span>curl -sSL xpm.sh/get | bash
             <br />
             <span className={css.comment}>
               # Install your favorite software.

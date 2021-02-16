@@ -38,7 +38,7 @@ It currently supports **Linux** and **MacOS**.
 1. Install xpm if it's not installed already:
 
 ```bash
-xpm v &>/dev/null || (curl -SsLo- 'xpm.sh/get' | bash)
+xpm v &>/dev/null || (curl -SsL xpm.sh/get | bash)
 ```
 
 2. Install whatever you need:
@@ -81,7 +81,7 @@ You can use xpm to install these deps for you!
 RUN apt-get update -y && apt install sudo curl get wget unzip
 # Install XPM itself. Pipe "yes" into it to avoid confirmation prompts.
 # (Also, see security notes below)
-RUN xpm v &>/dev/null || yes | (curl -SsLo- 'xpm.sh/get' | bash)
+RUN xpm v &>/dev/null || yes | (curl -SsL xpm.sh/get | bash)
 # Install with -y so confirmation isn't needed.
 RUN xpm install -y bar
 ```
