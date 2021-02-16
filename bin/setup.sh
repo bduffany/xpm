@@ -14,10 +14,14 @@ _xpm_import "platform/package_manager"
 
 : ${LOCAL_BINARIES_DIR:="/usr/local/bin"}
 
-printf "install xpm? [Y/n]: " && read && [[ "$REPLY" =~ ^[Yy]?$ ]]
+if [[ "$XPM_NOCONFIRM" != "true" ]]; then
+  printf "install xpm? [Y/n]: " && read && [[ "$REPLY" =~ ^[Yy]?$ ]]
+fi
 
 if ! which python3 >/dev/null; then
-  printf "install python3 (required by xpm)? [Y/n]" && read && [[ "$REPLY" =~ ^[Yy]?$ ]]
+  if [[ "$XPM_NOCONFIRM" != "true" ]]; then
+    printf "install python3 (required by xpm)? [Y/n]" && read && [[ "$REPLY" =~ ^[Yy]?$ ]]
+  fi
   xpm::platform::package_manager::install python3
 fi
 

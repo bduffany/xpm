@@ -9,7 +9,6 @@ OPTIONS:
 '
 
 function xpm::cmd::source::main() {
-  local using=false
   while getopts ":h" opt; do
     case ${opt} in
     h)
