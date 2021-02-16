@@ -47,7 +47,7 @@ xpm install fzf ngrok jq google-chrome # ...
 
 ### Which packages are supported?
 
-See the package listing in [bin/lib/packages](bin/lib/packages).
+See the package listing in [lib/packages](lib/packages).
 
 If a package is not found there, `xpm` falls back to the installed
 package manager (`apt-get`, `brew`, etc.)
