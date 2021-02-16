@@ -22,6 +22,11 @@ function xpm::cmd::source::main() {
       ;;
     esac
   done
+  if [[ $# != 1 ]]; then
+    echo "xpm source: incorrect number of arguments" >&2
+    echo "$__xpm_cmd_source_usage" >&2
+    exit 1
+  fi
   : ${_XPM_ROOT:="$(realpath $(dirname $(realpath "$0"))/..)"}
   echo "export _XPM_ROOT=\"$_XPM_ROOT\" && source \"$_XPM_ROOT/lib/bootstrap.sh\" && source \"$_XPM_ROOT/$1\""
 }

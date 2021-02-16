@@ -5,6 +5,6 @@ RUN apt update && apt install -y git sudo python3 curl unzip wget
 COPY . /src/xpm
 WORKDIR /src/xpm
 RUN rm -rf .git
-RUN yes | bin/setup.sh
+RUN XPM_NOCONFIRM=true bin/setup.sh
 
 CMD ["bash"]

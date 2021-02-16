@@ -23,13 +23,14 @@ function xpm::cmd::upgrade::main() {
     esac
   done
 
+  _xpm_cmd_upgrade_bin_path=$(which "$0")
   _xpm_cmd_upgrade_install_dir="$(dirname $(realpath "$0"))"
-  _xpm_cmd_upgrade_backup_dir=$(mktemp -d)
+  _xpm_cmd_upgrade_backup_dir=$(mktemp -d --suffix=.xpm)
 
   function _xpm_cmd_upgrade_cleanup() {
     if ! [[ -e "$_xpm_cmd_upgrade_install_dir" ]]; then
       echo "Something went wrong with the upgrade. Restore the old version with the following command:" >&2
-      printf "sudo rm \"$(which xpm)\" && " >&2
+      printf "sudo rm \"$_xpm_cmd_upgrade_bin_path\" && " >&2
       printf "sudo rm -rf \"$_xpm_cmd_upgrade_install_dir\" && " >&2
       printf "sudo mv \"$_xpm_cmd_upgrade_backup_dir\" \"$_xpm_cmd_upgrade_install_dir\"" >&2
       echo >&2
@@ -41,7 +42,8 @@ function xpm::cmd::upgrade::main() {
   trap _xpm_cmd_upgrade_cleanup EXIT
 
   echo "
-rm \"$_XPM_LOCAL_BIN_PATH\" xpm
+set -ex
+rm \"$_xpm_cmd_upgrade_bin_path\"
 rm -rf \"$_xpm_cmd_upgrade_install_dir\"
 curl -SsL xpm.sh/get | XPM_NOCONFIRM=true INSTALL_DIR=\"$_xpm_cmd_upgrade_install_dir\" bash
 " | bash
