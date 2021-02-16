@@ -8,7 +8,7 @@ Does this conversation sound familiar?
 
 > **You**: "Oh yeah, you'll have to install `foo`. Try installing `foo` on your machine then run the script again."
 
-> **Friend**: "Hmm... now the setup script is trying to run `brew install bar`, but I'm on Linux and I don't have `brew`."
+> **Friend**: "OK I installed foo... but now the setup script is trying to run `brew install bar`, but I'm on Linux and I don't have `brew`."
 
 > **You**: "Oh... well, try replacing `brew` with `apt-get` and see if it works."
 
