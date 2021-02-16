@@ -97,6 +97,4 @@ RUN xpm install -y bar
   with something malicious. If you believe that might happen, you could clone this repo and host
   your own version of XPM.
 
-- Other attack surfaces are not really under the control of xpm itself.
-
-- Please file an issue if you find a security vulnerability!
+- Other attack surfaces may exist; please file an issue if you think of one!
