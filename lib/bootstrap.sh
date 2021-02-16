@@ -6,13 +6,15 @@ if [[ "$__xpm_bootstrap_done" != 1 ]]; then
   : ${_XPM_ROOT:="$(realpath $(dirname $(realpath "$0"))/..)"}
   export _XPM_ROOT="$_XPM_ROOT"
 
-  # define _XPM_KERNEL
+  # define _XPM_* vars
   if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     export _XPM_KERNEL="linux"
     export _XPM_LOCAL_BIN_PATH="/usr/local/bin"
+    export _XPM_APPLICATIONS_PATH="/Applications"
   elif [[ "$OSTYPE" == "darwin"* ]]; then
     export _XPM_KERNEL="darwin"
     export _XPM_LOCAL_BIN_PATH="/usr/local/bin"
+    export _XPM_APPLICATIONS_PATH="/opt"
   else
     echo "unsupported OS: $OSTYPE" >&2
     exit 1
