@@ -21,19 +21,9 @@ if ! which python3 >/dev/null; then
   xpm::platform::package_manager::install python3
 fi
 
-function get_install_dir() {
-  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    echo "/opt/xpm"
-  elif [[ "$OSTYPE" == "darwin"* ]]; then
-    echo "/Applications/xpm"
-  else
-    echo "error: unsupported OS: $OSTYPE"
-    exit 1
-  fi
-}
-: ${INSTALL_DIR:=$(get_install_dir)}
+: ${INSTALL_DIR:="$_XPM_APPLICATIONS_DIR/xpm"}
 if [[ -e "$INSTALL_DIR" ]]; then
-  echo "error: directory already exists: \"$INSTALL_DIR\"" >&2
+  echo "error: xpm installation directory already exists: \"$INSTALL_DIR\"" >&2
   exit 1
 fi
 
