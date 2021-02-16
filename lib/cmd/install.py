@@ -21,7 +21,7 @@ class Installer(object):
     def is_installed(self, dep: str) -> bool:
         return dep in self._installed
 
-    def install(self, dep: str, stack: List[str] = None):
+    def install(self, dep: str, stack: List[str] = None, no_confirm=False):
         if self.is_installed(dep):
             return
         if stack is None:
@@ -35,9 +35,9 @@ class Installer(object):
 
         # install direct deps of package
         for direct_dep in direct_deps(dep):
-            self.install(direct_dep, stack)
+            self.install(direct_dep, stack=stack, no_confirm=no_confirm)
         # install package
-        install_package(dep)
+        install_package(dep, no_confirm=no_confirm)
         self._installed.add(dep)
 
         stack.pop()
@@ -59,7 +59,7 @@ class Installer(object):
                 if dep not in self._installed and dep not in self._not_installed:
                     frontier.add(dep)
 
-    def main(self):
+    def main(self, no_confirm=False):
         packages_to_install = self.packages_to_install()
 
         if not len(packages_to_install):
@@ -67,14 +67,14 @@ class Installer(object):
 
         print("xpm: will install the following packages:")
         print("  " + ", ".join(packages_to_install))
-        if not args.yes:
+        if not no_confirm:
             print("OK [Y/n]? ", end="")
             response = input()
             if response and not re.match(r"^y(es)?$", response.lower().strip()):
                 sys.exit(1)
 
         for dep in self._not_installed:
-            self.install(dep)
+            self.install(dep, no_confirm=no_confirm)
 
 
 @functools.lru_cache(maxsize=None)
@@ -96,7 +96,7 @@ def bash_script(*args):
     return f"""bash -c 'set -e && {" && ".join(args)}'"""
 
 
-def install_package(package: str):
+def install_package(package: str, no_confirm=False):
     install_script = f"lib/packages/{package}/install.sh"
     if os.path.exists(install_script):
         subprocess.run(
@@ -104,6 +104,7 @@ def install_package(package: str):
                 "cd $(mktemp -d)",
                 'function cleanup() { rm -rf "$PWD"; }',
                 "trap cleanup EXIT",
+                f'export _XPM_NOCONFIRM={"true" if no_confirm else "false"}',
                 f'eval "$(xpm source "{install_script}")"',
             ),
             shell=True,
@@ -115,6 +116,7 @@ def install_package(package: str):
             bash_script(
                 "set -x",
                 'eval "$(xpm source lib/platform/package_manager.sh)"',
+                f'export _XPM_NOCONFIRM={"true" if no_confirm else "false"}',
                 f'xpm::platform::package_manager::install "{package}"',
             ),
             shell=True,
@@ -129,4 +131,4 @@ if __name__ == "__main__":
         "-y", "--yes", action="store_true", help="install without prompting"
     )
     args = parser.parse_args()
-    Installer(args.packages).main()
+    Installer(args.packages).main(no_confirm=args.yes)
