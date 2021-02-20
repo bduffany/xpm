@@ -17,6 +17,14 @@ function xpm::log::comment() {
   xpm::log::color dim "$@\n"
 }
 
+function xpm::log::warn() {
+  xpm::log::color yellow "$@\n"
+}
+
+function xpm::log::info() {
+  xpm::log::color blue "$@\n"
+}
+
 function xpm::log::color() {
   if [[ "$COLOR" == "false" ]] || ! [ -t 1 ]; then
     shift
@@ -30,7 +38,7 @@ function xpm::log::color() {
 }
 
 function xpm::log::alias() {
-  for name in fatal comment success color; do
+  for name in fatal success comment warn info color; do
     xpm::functions::redeclare "xpm::log::$name" "$name"
   done
 }
