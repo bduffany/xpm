@@ -79,9 +79,8 @@ You can use xpm to install these deps for you!
 ```dockerfile
 # Install basic deps needed for xpm
 RUN apt-get update -y && apt install sudo curl get wget unzip
-# Install XPM itself. Pipe "yes" into it to avoid confirmation prompts.
-# (Also, see security notes below)
-RUN xpm v &>/dev/null || yes | (curl -SsL xpm.sh/get | bash)
+# Install XPM itself. Use XPM_NOCONFIRM=true to avoid confirmation prompts.
+RUN xpm v &>/dev/null || curl -SsL xpm.sh/get | XPM_NOCONFIRM=true bash
 # Install with -y so confirmation isn't needed.
 RUN xpm install -y bar
 ```
