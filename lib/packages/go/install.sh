@@ -13,7 +13,9 @@ if [[ "$_XPM_KERNEL" == "darwin" ]]; then
   out=~/Downloads/go"$go_version".darwin-amd64.pkg
   wget -O "$out" \
     "https://golang.org/dl/go$go_version.darwin-amd64.pkg"
+  # TODO: Avoid the need for manual interaction here.
   open "$out"
+  exit
 fi
 
 wget -O "go.tar.gz" "https://golang.org/dl/go$go_version.linux-amd64.tar.gz"
