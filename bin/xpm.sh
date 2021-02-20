@@ -12,6 +12,7 @@ COMMANDS:
   install, i  install a package on the current system
   source      output shell code for importing xpm sources
   upgrade     upgrade xpm
+  root        print absolute path to xpm root dir
   help, h     show help for xpm
   version, v  print version and exit
 "
