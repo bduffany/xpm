@@ -1,4 +1,4 @@
-# XPM: Cross-platform package manager
+# XPM: Any software, any platform
 
 Does this conversation sound familiar?
 

@@ -12,29 +12,39 @@ export default function Home() {
       <div className={css.card}>
         <div className={`${css.title} ${css.cardRow}`}>xpm</div>
         <div className={`${css.cardRow}`}>
-          Install any software on any platform, all from the command line.
+          Install the latest versions of any software on any platform.
         </div>
         <div className={css.term}>
           <pre>
-            <span className={css.comment}>
-              # get xpm
-              <br />
-            </span>
-            <span className={css.ps1}>$ </span>curl -sSL xpm.sh/get | bash
-            <br />
-            <span className={css.comment}>
-              # Install your favorite software.
-              <br /># (You won't find these on apt-get!)
-              <br />
-            </span>
-            <span className={css.ps1}>$ </span>xpm install google-chrome fzf
-            ngrok
+            <Comment>get xpm</Comment>
+            <Command>curl -sSL xpm.sh/get | bash</Command>
+            <Comment>Install your favorite software.</Comment>
+            <Command>xpm install google-chrome fzf ngrok go</Command>
           </pre>
         </div>
         <div className={css.cardRow}>
           <a href="https://github.com/bduffany/xpm">Check it out on GitHub</a>
         </div>
       </div>
+    </>
+  );
+}
+
+function Comment({ children }: Pick<JSX.IntrinsicElements['div'], 'children'>) {
+  return (
+    <span className={css.comment}>
+      # {children}
+      <br />
+    </span>
+  );
+}
+
+function Command({ children }: Pick<JSX.IntrinsicElements['div'], 'children'>) {
+  return (
+    <>
+      <span className={css.ps1}>$ </span>
+      {children}
+      <br />
     </>
   );
 }
