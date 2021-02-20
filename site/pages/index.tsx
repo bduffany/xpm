@@ -16,9 +16,9 @@ export default function Home() {
         </div>
         <div className={css.term}>
           <pre>
-            <Comment>get xpm</Comment>
+            <Comment>Get xpm</Comment>
             <Command>curl -sSL xpm.sh/get | bash</Command>
-            <Comment>Install your favorite software.</Comment>
+            <Comment>Install your favorite software</Comment>
             <Command>xpm install google-chrome fzf ngrok go</Command>
           </pre>
         </div>
