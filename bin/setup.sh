@@ -12,7 +12,7 @@ source "$_XPM_ROOT/lib/bootstrap.sh"
 _xpm_import "log"
 _xpm_import "platform/package_manager"
 
-: ${LOCAL_BINARIES_DIR:="/usr/local/bin"}
+: "${LOCAL_BINARIES_DIR:=/usr/local/bin}"
 
 if [[ "$XPM_NOCONFIRM" != "true" ]]; then
   printf "install xpm? [Y/n]: " && read && [[ "$REPLY" =~ ^[Yy]?$ ]]
@@ -25,7 +25,7 @@ if ! which python3 >/dev/null; then
   xpm::platform::package_manager::install python3
 fi
 
-: ${INSTALL_DIR:="$_XPM_APPLICATIONS_DIR/xpm"}
+: "${INSTALL_DIR:=$_XPM_APPLICATIONS_DIR/xpm}"
 if [[ -e "$INSTALL_DIR" ]]; then
   echo "error: xpm installation directory already exists: \"$INSTALL_DIR\"" >&2
   exit 1
