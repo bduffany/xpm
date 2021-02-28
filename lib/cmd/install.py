@@ -93,7 +93,7 @@ def direct_deps(package: str):
 
 
 def bash_script(*args):
-    return f"""bash -c 'set -e && {" && ".join(args)}'"""
+    return f"""bash -c 'set -eo pipefail && {" && ".join(args)}'"""
 
 
 def install_package(package: str, no_confirm=False):
@@ -114,7 +114,6 @@ def install_package(package: str, no_confirm=False):
         # Try running the platform's package manager.
         subprocess.run(
             bash_script(
-                "set -x",
                 'eval "$(xpm source lib/platform/package_manager.sh)"',
                 f'export _XPM_NOCONFIRM={"true" if no_confirm else "false"}',
                 f'xpm::platform::package_manager::install "{package}"',
