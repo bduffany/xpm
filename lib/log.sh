@@ -9,6 +9,10 @@ function xpm::log::fatal() {
   exit 1
 }
 
+function xpm::log::error() {
+  xpm::log::color red "$@\n"
+}
+
 function xpm::log::success() {
   xpm::log::color green "$@\n"
 }
