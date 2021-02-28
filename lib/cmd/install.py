@@ -125,10 +125,11 @@ def install_package(package: str, no_confirm=False):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(prog="xpm install")
     parser.add_argument("packages", nargs="+", help="packages to install")
     parser.add_argument(
         "-y", "--yes", action="store_true", help="install without prompting"
     )
     args = parser.parse_args()
+
     Installer(args.packages).main(no_confirm=args.yes)
