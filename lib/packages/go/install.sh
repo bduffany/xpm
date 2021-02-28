@@ -10,11 +10,10 @@ go_version=$(
 )
 
 if [[ "$_XPM_KERNEL" == "darwin" ]]; then
+  mkdir -p ~/Downloads
   out=~/Downloads/go"$go_version".darwin-amd64.pkg
-  wget -O "$out" \
-    "https://golang.org/dl/go$go_version.darwin-amd64.pkg"
-  # TODO: Avoid the need for manual interaction here.
-  open "$out"
+  wget -O "$out" "https://golang.org/dl/go$go_version.darwin-amd64.pkg"
+  sudo installer -pkg "$out" -target /
   exit
 fi
 
