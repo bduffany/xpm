@@ -18,7 +18,7 @@ export default function Home() {
           <pre>
             <Comment>Get xpm</Comment>
             <Command>curl -sSL xpm.sh/get | bash</Command>
-            <Command>Install without hassle</Command>
+            <Comment>Install without hassle</Comment>
             <Command>xpm install node go bazel google-chrome</Command>
           </pre>
         </div>
