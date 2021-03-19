@@ -55,6 +55,7 @@
 .ps1,
 .comment {
   user-select: none;
+  pointer-events: none;
 }
 
 .comment {

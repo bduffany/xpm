@@ -18,8 +18,8 @@ export default function Home() {
           <pre>
             <Comment>Get xpm</Comment>
             <Command>curl -sSL xpm.sh/get | bash</Command>
-            <Comment>Install your favorite software</Comment>
-            <Command>xpm install google-chrome fzf ngrok go</Command>
+            <Command>Install without hassle</Command>
+            <Command>xpm install node go bazel google-chrome</Command>
           </pre>
         </div>
         <div className={css.cardRow}>
