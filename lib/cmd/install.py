@@ -13,10 +13,9 @@ def sh(command: str, **kwargs):
 
 class Installer(object):
     def __init__(self, packages: List[str] = None):
-        self._installed = set([])
-        self._not_installed = set([])
-        if packages is not None:
-            self.add_all(packages)
+        self._packages = packages
+        self._installed = set()
+        self._not_installed = set()
 
     def is_installed(self, dep: str) -> bool:
         return dep in self._installed
@@ -45,7 +44,7 @@ class Installer(object):
     def packages_to_install(self):
         return sorted(self._not_installed)
 
-    def add_all(self, packages: List[str]):
+    def add_all(self, packages: List[str], force=False):
         frontier = set(packages)
 
         while len(frontier):
@@ -59,7 +58,14 @@ class Installer(object):
                 if dep not in self._installed and dep not in self._not_installed:
                     frontier.add(dep)
 
-    def main(self, no_confirm=False):
+        if force:
+            self._not_installed.update(self._installed)
+            self._installed = set()
+
+    def main(self, no_confirm=False, force=False):
+        if self._packages is not None:
+            self.add_all(self._packages, force=force)
+
         packages_to_install = self.packages_to_install()
 
         if not len(packages_to_install):
@@ -129,6 +135,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "-y", "--yes", action="store_true", help="install without prompting"
     )
+    parser.add_argument(
+        "-f",
+        "--force",
+        action="store_true",
+        help="force install, including all deps",
+    )
     args = parser.parse_args()
 
-    Installer(args.packages).main(no_confirm=args.yes)
+    Installer(args.packages).main(no_confirm=args.yes, force=args.force)
