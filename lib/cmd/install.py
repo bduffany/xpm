@@ -86,7 +86,7 @@ class Installer(object):
 @functools.lru_cache(maxsize=None)
 def is_installed(dep: str):
     # TODO: Handle cases where commands don't necessarily match the package name
-    return sh(f"which {dep}").returncode == 0
+    return sh(f"command -v {dep}").returncode == 0
 
 
 @functools.lru_cache(maxsize=None)
@@ -105,7 +105,7 @@ def bash_script(*args):
 def install_package(package: str, no_confirm=False):
     install_script = f"lib/packages/{package}/install.sh"
     if os.path.exists(install_script):
-        subprocess.run(
+        p = subprocess.run(
             bash_script(
                 "cd $(mktemp -d)",
                 'function cleanup() { rm -rf "$PWD"; }',
@@ -114,8 +114,11 @@ def install_package(package: str, no_confirm=False):
                 f'eval "$(xpm source "{install_script}")"',
             ),
             shell=True,
-            check=True,
+            check=False,
         )
+        if p.returncode != 0:
+            print("xpm: failed to install " + package, file=sys.stderr)
+            exit(1)
     else:
         # Try running the platform's package manager.
         subprocess.run(
