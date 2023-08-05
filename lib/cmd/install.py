@@ -108,7 +108,8 @@ def install_package(package: str, no_confirm=False):
         p = subprocess.run(
             bash_script(
                 "cd $(mktemp -d)",
-                'function cleanup() { rm -rf "$PWD"; }',
+                'WORKDIR="$PWD"',
+                'function cleanup() { rm -rf "$WORKDIR"; }',
                 "trap cleanup EXIT",
                 f'export _XPM_NOCONFIRM={"true" if no_confirm else "false"}',
                 f'eval "$(xpm source "{install_script}")"',
