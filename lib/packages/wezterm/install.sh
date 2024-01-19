@@ -11,3 +11,9 @@ echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/w
   sudo tee /etc/apt/sources.list.d/wezterm.list
 sudo apt-get update
 sudo apt-get install -y wezterm-nightly
+
+# Init wezterm config
+mkdir -p ~/.config/wezterm/
+if ! [[ -e ~/.config/wezterm/wezterm.lua ]]; then
+  cp wezterm.lua ~/.config/wezterm/wezterm.lua
+fi
