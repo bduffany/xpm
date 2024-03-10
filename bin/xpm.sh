@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -e
-source "$(dirname $(realpath "$0"))/../lib/bootstrap.sh"
+
+# Entrypoint script for the xpm CLI.
+
+source "$(dirname "$(readlink -f "$0")")/../lib/bootstrap.sh"
 
 USAGE="NAME:
     xpm - cross-platform package manager
@@ -17,7 +20,7 @@ COMMANDS:
   version, v  print version and exit
 "
 
-if [[ -z "$@" ]]; then
+if [[ $# == 0 ]]; then
   echo "$USAGE" >&2
   exit 1
 fi
@@ -32,7 +35,11 @@ if ! [[ -e "$_XPM_ROOT/lib/cmd/" ]]; then
   echo "xpm: error: could not locate lib/cmd/ subdirectory of _XPM_ROOT (set to $_XPM_ROOT)"
   exit 1
 fi
-if [[ "$cmd" == "v" ]]; then
+if [[ "$cmd" == "h" ]]; then
+  cmd="help"
+elif [[ "$cmd" == "i" ]]; then
+  cmd="install"
+elif [[ "$cmd" == "v" ]]; then
   cmd="version"
 fi
 if ! [[ -e "$_XPM_ROOT/lib/cmd/$cmd.sh" ]]; then
