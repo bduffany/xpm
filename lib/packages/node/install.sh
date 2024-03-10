@@ -20,7 +20,7 @@ if which apt-get &>/dev/null; then
   exit
 fi
 
-wget -O- "https://nodejs.org/dist/$version/node-$version-linux-x64.tar.xz" |
+curl -fsSL "https://nodejs.org/dist/$version/node-$version-linux-x64.tar.xz" |
   tar xfJ - --strip-components 1
 find . -maxdepth 1 -type d | grep / | while read -r dir; do
   cp -R "$dir" /usr/local
