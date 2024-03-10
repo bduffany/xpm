@@ -12,7 +12,7 @@ def sh(command: str, **kwargs):
 
 
 class Installer(object):
-    def __init__(self, packages: List[str] = None):
+    def __init__(self, packages):
         self._packages = packages
         self._installed = set()
         self._not_installed = set()
@@ -41,10 +41,14 @@ class Installer(object):
 
         stack.pop()
 
-    def packages_to_install(self):
-        return sorted(self._not_installed)
+    def packages_to_install(self, force=False):
+        packages = list(self._not_installed)
+        if force:
+            packages.extend(self._installed)
+        # TODO: toposort
+        return packages
 
-    def add_all(self, packages: List[str], force=False):
+    def add_all(self, packages: List[str]):
         frontier = set(packages)
 
         while len(frontier):
@@ -58,34 +62,62 @@ class Installer(object):
                 if dep not in self._installed and dep not in self._not_installed:
                     frontier.add(dep)
 
-        if force:
-            self._not_installed.update(self._installed)
-            self._installed = set()
+    def _resolve_aliases(self):
+        packages = []
+        for package in self._packages:
+            alias_file_path = f"lib/packages/{package}/alias.txt"
+            if os.path.exists(alias_file_path):
+                with open(alias_file_path, "r") as f:
+                    resolved_package = f.read().strip()
+                packages.append(resolved_package)
+            else:
+                packages.append(package)
+        self._packages = packages
 
     def main(self, no_confirm=False, force=False):
         if self._packages is not None:
-            self.add_all(self._packages, force=force)
+            self._resolve_aliases()
+            self.add_all(self._packages)
 
-        packages_to_install = self.packages_to_install()
+        packages_to_install = self.packages_to_install(force=force)
+
+        if len(self._installed) and not force:
+            print("The following packages are already installed:")
+            print("  " + ", ".join(sorted(self._installed)))
 
         if not len(packages_to_install):
             sys.exit(0)
 
-        print("xpm: will install the following packages:")
-        print("  " + ", ".join(packages_to_install))
+        if self._not_installed:
+            print("The following packages will be installed:")
+            print("  " + ", ".join(sorted(self._not_installed)))
+        if force:
+            print("The following packages will be reinstalled:")
+            print("  " + ", ".join(sorted(self._installed)))
         if not no_confirm:
             print("OK [Y/n]? ", end="")
             response = input()
             if response and not re.match(r"^y(es)?$", response.lower().strip()):
                 sys.exit(1)
 
-        for dep in self._not_installed:
+        if force:
+            self._installed = set()
+        for dep in packages_to_install:
+            print(f"Installing {dep}...")
             self.install(dep, no_confirm=no_confirm)
+            print(f"Successfully installed {dep}")
 
 
 @functools.lru_cache(maxsize=None)
 def is_installed(dep: str):
-    # TODO: Handle cases where commands don't necessarily match the package name
+    # Run is_installed.sh if it's implemented.
+    is_installed_script = f"lib/packages/{dep}/is_installed.sh"
+    if os.path.exists(is_installed_script):
+        p = subprocess.run(
+            ["bash", is_installed_script], check=False, stdout=subprocess.DEVNULL
+        )
+        return p.returncode == 0
+    # For now, fall back to a simple command -v check.
     return sh(f"command -v {dep}").returncode == 0
 
 
@@ -147,4 +179,8 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    Installer(args.packages).main(no_confirm=args.yes, force=args.force)
+    try:
+        Installer(args.packages).main(no_confirm=args.yes, force=args.force)
+    except KeyboardInterrupt:
+        print()
+        exit(1)
