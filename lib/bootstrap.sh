@@ -5,6 +5,7 @@ if [[ "$__xpm_bootstrap_done" != 1 ]]; then
 
   : "${_XPM_ROOT:="$(readlink -f "$(dirname "$(readlink -f "$0")")"/..)"}"
   export _XPM_ROOT="$_XPM_ROOT"
+  export PATH="${_XPM_ROOT}/bin:$PATH"
 
   # define _XPM_* vars
   if [[ "$OSTYPE" == "linux-gnu"* ]]; then

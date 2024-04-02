@@ -23,7 +23,12 @@ if [[ "$_XPM_KERNEL" == "darwin" ]]; then
   exit
 fi
 
-wget -O "go.tar.gz" "${URL_PREFIX}linux-amd64.tar.gz"
+ARCH=amd64
+if [[ $(uname -m) == aarch64 ]]; then
+  ARCH=arm64
+fi
+
+wget -O "go.tar.gz" "${URL_PREFIX}linux-${ARCH}.tar.gz"
 # Remove any existing go installation
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf "go.tar.gz"
