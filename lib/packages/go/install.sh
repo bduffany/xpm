@@ -23,7 +23,7 @@ if [[ "$_XPM_KERNEL" == "darwin" ]]; then
   exit
 fi
 
-wget -O "go.tar.gz" "${URL_PREFIX}linux-${_XPM_ARCH}.tar.gz"
+curl -fsSL --output "go.tar.gz" "${URL_PREFIX}linux-${_XPM_ARCH}.tar.gz"
 # Remove any existing go installation
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf "go.tar.gz"
