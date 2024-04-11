@@ -2,7 +2,8 @@
 
 curl -fsSL https://api.github.com/repos/withered-magic/starpls/releases/latest |
   jq -r '.assets[].browser_download_url' |
-  grep -E "/starpls-${_XPM_KERNEL}-${_XPM_ARCH}.tar.gz$" |
+  grep -E "/starpls-${_XPM_KERNEL}-${_XPM_ARCH}$" |
+  tee /dev/stderr |
   xargs curl -fsSL --output ./starpls
 
 chmod +x starpls
