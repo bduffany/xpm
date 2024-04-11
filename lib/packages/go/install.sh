@@ -30,5 +30,5 @@ sudo tar -C /usr/local -xzf "go.tar.gz"
 
 # Update /etc/profile with /usr/local/go/bin
 if ! grep -q /usr/local/go/bin /etc/profile; then
-  echo "export PATH=\"\$PATH:/usr/local/go/bin\"" | sudo tee --append /etc/profile
+  echo "export PATH=\"\$PATH:/usr/local/go/bin\"" | sudo tee --append /etc/profile >/dev/null
 fi
