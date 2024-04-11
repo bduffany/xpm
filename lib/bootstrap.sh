@@ -21,6 +21,13 @@ if [[ "$__xpm_bootstrap_done" != 1 ]]; then
     exit 1
   fi
 
+  # TODO: support other architectures
+  if [[ "$(uname -m)" == aarch64 ]]; then
+    export _XPM_ARCH=arm64
+  else
+    export _XPM_ARCH=amd64
+  fi
+
   __xpm_bootstrap_done=1
   __xpm_bootstrap_imports=()
 

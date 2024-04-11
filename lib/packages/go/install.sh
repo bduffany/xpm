@@ -19,16 +19,11 @@ URL_PREFIX="https://go.dev/dl/go${go_version}."
 
 if [[ "$_XPM_KERNEL" == "darwin" ]]; then
   eval "$(xpm source lib/darwin.sh)"
-  xpm::darwin::install_pkg "${URL_PREFIX}darwin-amd64.pkg"
+  xpm::darwin::install_pkg "${URL_PREFIX}darwin-${_XPM_ARCH}.pkg"
   exit
 fi
 
-ARCH=amd64
-if [[ $(uname -m) == aarch64 ]]; then
-  ARCH=arm64
-fi
-
-wget -O "go.tar.gz" "${URL_PREFIX}linux-${ARCH}.tar.gz"
+wget -O "go.tar.gz" "${URL_PREFIX}linux-${_XPM_ARCH}.tar.gz"
 # Remove any existing go installation
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf "go.tar.gz"
