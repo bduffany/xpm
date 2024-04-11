@@ -27,4 +27,8 @@ curl -fsSL --output "go.tar.gz" "${URL_PREFIX}linux-${_XPM_ARCH}.tar.gz"
 # Remove any existing go installation
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf "go.tar.gz"
-echo "export PATH=\"\$PATH:/usr/local/go/bin\"" | sudo tee /etc/profile >/dev/null
+
+# Update /etc/profile with /usr/local/go/bin
+if ! grep -q /usr/local/go/bin /etc/profile; then
+  echo "export PATH=\"\$PATH:/usr/local/go/bin\"" | sudo tee --append /etc/profile
+fi
