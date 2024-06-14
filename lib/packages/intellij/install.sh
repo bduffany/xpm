@@ -20,11 +20,11 @@ Version=1.0
 Type=Application
 Name=IntelliJ IDEA Community Edition
 Icon=idea
-Exec="/opt/idea/bin/idea.sh" %f
+Exec="/opt/idea/bin/idea" %f
 Comment=IntelliJ IDE from JetBrains
 Categories=Development;IDE;
 Terminal=false
 StartupWMClass=jetbrains-intellij-idea
 EOF
 
-sudo ln -s "/opt/idea/bin/idea.sh" "$_XPM_LOCAL_BIN_PATH/intellij"
+sudo ln -s "/opt/idea/bin/idea" "$_XPM_LOCAL_BIN_PATH/intellij"
