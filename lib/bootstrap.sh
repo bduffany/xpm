@@ -1,21 +1,23 @@
 # bootstrap.sh: Sets up bash globals used by the xpm binary as well as
 # packages that it installs.
 
-if [[ "$__xpm_bootstrap_done" != 1 ]]; then
+if [[ "${__xpm_bootstrap_done:-}" != 1 ]]; then
 
   : "${_XPM_ROOT:="$(readlink -f "$(dirname "$(readlink -f "$0")")"/..)"}"
   export _XPM_ROOT="$_XPM_ROOT"
   export PATH="${_XPM_ROOT}/bin:$PATH"
 
   # define _XPM_* vars
-  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  if [[ "$OSTYPE" == "linux"* ]]; then
     export _XPM_KERNEL="linux"
     export _XPM_LOCAL_BIN_PATH="/usr/local/bin"
-    export _XPM_APPLICATIONS_PATH="/Applications"
+    export _XPM_APPLICATIONS_PATH="/opt"
+    export _XPM_DESKTOP_ENTRIES_PATH="$HOME/.local/share/applications"
+    export _XPM_DESKTOP_ICONS_PATH="$HOME/.local/share/icons"
   elif [[ "$OSTYPE" == "darwin"* ]]; then
     export _XPM_KERNEL="darwin"
     export _XPM_LOCAL_BIN_PATH="/usr/local/bin"
-    export _XPM_APPLICATIONS_PATH="/opt"
+    export _XPM_APPLICATIONS_PATH="/Applications"
   else
     echo "unsupported OS: $OSTYPE" >&2
     exit 1

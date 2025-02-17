@@ -131,7 +131,7 @@ def direct_deps(package: str):
 
 
 def bash_script(*args):
-    return f"""bash -c 'set -eo pipefail && {" && ".join(args)}'"""
+    return f"""bash -euo pipefail '{"\n".join(args)}'"""
 
 
 def install_package(package: str, no_confirm=False):
