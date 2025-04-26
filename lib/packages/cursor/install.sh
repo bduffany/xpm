@@ -4,8 +4,9 @@ if [[ "$OSTYPE" != linux* ]]; then
   echo "cursor installer not yet implemented for $OSTYPE"
   exit 1
 fi
-
-curl -fsSL "https://downloader.cursor.sh/linux/appImage/x64" >./cursor
+curl -fsSL "https://www.cursor.com/api/download?platform=linux-x64&releaseTrack=stable" |
+  jq -r '.downloadUrl' |
+  xargs curl -fsSL > ./cursor
 chmod +x ./cursor
 
 curl -fsSL "https://us1.discourse-cdn.com/flex020/uploads/cursor1/original/2X/a/a4f78589d63edd61a2843306f8e11bad9590f0ca.png" >./cursor.png
