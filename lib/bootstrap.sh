@@ -52,7 +52,7 @@ if [[ "${__xpm_bootstrap_done:-}" != 1 ]]; then
       return 1
     fi
     source "$full_path"
-    __xpm_bootstrap_imports+=("$path")
+    __xpm_bootstrap_imports+=("$import_path")
   }
 
 fi
