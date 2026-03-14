@@ -10,10 +10,11 @@ installed.
 
 ## How do I use it?
 
-1. Install xpm if it's not installed already:
+1. Install xpm:
 
-```bash
-xpm v &>/dev/null || (curl -SsL xpm.sh/get | bash)
+```
+git clone https://github.com/bduffany/xpm
+echo "Add to bashrc: export PATH=\"$PWD/xpm:\$PATH\""
 ```
 
 2. Install stuff with `xpm install` or `xpm i` for short:
